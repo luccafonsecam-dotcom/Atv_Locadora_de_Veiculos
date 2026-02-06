@@ -30,7 +30,7 @@ public function create()
     return view('alugueis.create', compact('usuarios', 'carros'));
 }
 
-    /**
+    /**  
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
