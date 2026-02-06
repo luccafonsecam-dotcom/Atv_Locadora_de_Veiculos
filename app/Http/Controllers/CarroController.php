@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Carro;
 
 class CarroController extends Controller
 {
@@ -11,7 +12,8 @@ class CarroController extends Controller
      */
     public function index()
     {
-        //
+        $carros = Carro::all();
+        return view('carros.index', compact('carros'));
     }
 
     /**
@@ -19,7 +21,7 @@ class CarroController extends Controller
      */
     public function create()
     {
-        //
+         return view('carros.create');
     }
 
     /**
@@ -27,23 +29,36 @@ class CarroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'modelo' => 'required|string',
+            'placa' => 'required|string|unique:carros,placa',
+            'marca' => 'required|string',
+            'ano' => 'required|integer',
+            'preco_diaria' => 'required|numeric',
+            'descricao' => 'nullable|string',
+        ]);
+
+        Carro::create([
+            'modelo' => $request->modelo,
+            'placa' => $request->placa,
+            'marca' => $request->marca,
+            'ano' => $request->ano,
+            'preco_diaria' => $request->preco_diaria,
+            'descricao' => $request->descricao,
+            'status' => 'disponivel', // padrão
+        ]);
+
+        return redirect()->route('carros.index')->with('sucesso', 'Carro cadastrado!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+         $carro = Carro::findOrFail($id);
+        return view('carros.edit', compact('carro'));
     }
 
     /**
@@ -51,7 +66,26 @@ class CarroController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $carro = Carro::findOrFail($id);
+
+        $request->validate([
+            'modelo' => 'required|string',
+            'placa' => 'required|string|unique:carros,placa,' . $carro->id,
+            'marca' => 'required|string',
+            'ano' => 'required|integer',
+            'preco_diaria' => 'required|numeric',
+            'descricao' => 'nullable|string',
+            'status' => 'required|in:disponivel,alugado,manutencao',
+        ]);
+
+        // regra simples: não permitir mudar status se estiver alugado
+        if ($carro->status === 'alugado') {
+            return redirect()->back()->with('erro', 'Carro está alugado.');
+        }
+
+        $carro->update($request->all());
+
+        return redirect()->route('carros.index')->with('sucesso', 'Carro atualizado!');
     }
 
     /**
@@ -59,6 +93,14 @@ class CarroController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+         $carro = Carro::findOrFail($id);
+
+        if ($carro->status === 'alugado') {
+            return redirect()->back()->with('erro', 'Não é possível excluir um carro alugado.');
+        }
+
+        $carro->delete();
+
+        return redirect()->route('carros.index')->with('sucesso', 'Carro removido!');
     }
 }

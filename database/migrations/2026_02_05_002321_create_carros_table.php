@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('carros', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('id');
+            $table->string('modelo');
+            $table->string('marca');
+            $table->year('ano');
+            $table->decimal('preco_diaria');
+            $table->text('descricao')->nullable();
+            $table->enum('status', ['disponível', 'indisponível'])->default('disponível');
         });
     }
 
