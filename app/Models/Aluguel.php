@@ -10,15 +10,20 @@ use App\Models\User;
 class Aluguel extends Model
 {
     use HasFactory;
+
+    // 👇 FALTAVA ISSO
+    protected $table = 'alugueis';
+
     protected $fillable = [
-    'usuario_id',
-    'carro_id',
-    'data_inicio',
-    'data_final_prevista',
-    'data_final_entregue',
-    'status',
-];
-public function carro()
+        'usuario_id',
+        'carro_id',
+        'data_inicio',
+        'data_final_prevista',
+        'data_final_entregue',
+        'status',
+    ];
+
+    public function carro()
     {
         return $this->belongsTo(Carro::class);
     }
@@ -27,5 +32,4 @@ public function carro()
     {
         return $this->belongsTo(User::class);
     }
- 
 }

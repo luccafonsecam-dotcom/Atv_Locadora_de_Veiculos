@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('carros', function (Blueprint $table) {
             $table->id('id');
             $table->string('modelo');
+             $table->string('placa')->unique();
             $table->string('marca');
             $table->year('ano');
             $table->decimal('preco_diaria');
             $table->text('descricao')->nullable();
             $table->enum('status', ['disponível', 'indisponível'])->default('disponível');
+            $table->timestamps();
         });
     }
 

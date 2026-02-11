@@ -24,4 +24,5 @@ class Carro extends Model
     {
         return $this->hasMany(Aluguel::class);
     }
+    
 }
