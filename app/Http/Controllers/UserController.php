@@ -27,11 +27,12 @@ public function store(Request $request)
         'name' => $request->name,
         'email' => $request->email,
         'password' => bcrypt($request->password),
-        'status' => $request->status
+        'disponibilidade' => $request->disponibilidade
     ]);
 
     return redirect()->route('usuarios.index');
 }
+
 
 public function edit($id)
 {
@@ -46,11 +47,12 @@ public function update(Request $request, $id)
     $usuario->update([
         'name' => $request->name,
         'email' => $request->email,
-        'status' => $request->status
+        'disponibilidade' => $request->disponibilidade
     ]);
 
     return redirect()->route('usuarios.index');
 }
+
 
 public function destroy($id)
 {

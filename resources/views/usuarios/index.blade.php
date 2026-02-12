@@ -20,7 +20,17 @@
         <td>{{ $u->id }}</td>
         <td>{{ $u->name }}</td>
         <td>{{ $u->email }}</td>
-        <td>{{ $u->status }}</td>
+        <td>
+            @if ($u->disponibilidade == 'disponível')
+                <span class="badge bg-success">
+                    {{ ucfirst($u->disponibilidade) }}
+                </span>
+            @else
+                <span class="badge bg-danger">
+                    {{ ucfirst($u->disponibilidade) }}
+                </span>
+            @endif
+        </td>
         <td>
             <a href="{{ route('usuarios.edit', $u->id) }}" class="btn btn-warning btn-sm">Editar</a>
 

@@ -11,7 +11,7 @@ class Aluguel extends Model
 {
     use HasFactory;
 
-    // 👇 FALTAVA ISSO
+    
     protected $table = 'alugueis';
 
     protected $fillable = [

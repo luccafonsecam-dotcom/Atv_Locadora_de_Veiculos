@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('carro_id')->constrained()->cascadeOnDelete();
 
             $table->date('data_inicio');
-            $table->date('data_final_prevista')->nullable();
+            $table->date('data_final_prevista');
             $table->date('data_final_entregue')->nullable();
             $table->enum('status', ['aberto', 'finalizado', 'cancelado'])->default('aberto');
             $table->timestamps();

@@ -26,6 +26,8 @@ class AluguelController extends Controller
 
     public function store(Request $request)
     {
+
+        dd($request->all());
         $request->validate([
             'usuario_id' => 'required|exists:usuarios,id',
             'carro_id' => 'required|exists:carros,id',

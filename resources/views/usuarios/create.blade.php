@@ -11,9 +11,9 @@
 <input name="email" placeholder="Email" class="form-control mb-2">
 <input name="password" type="password" placeholder="Senha" class="form-control mb-2">
 
-<select name="status" class="form-control mb-2">
-    <option value="ativo">Ativo</option>
-    <option value="inativo">Inativo</option>
+<select name="disponibilidade" class="form-control mb-2">
+    <option value="disponivel">Ativo</option>
+    <option value="indisponivel">Inativo</option>
 </select>
 
 <button class="btn btn-success">Salvar</button>
